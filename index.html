@@ -1,225 +1,591 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <!-- 适配移动端 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的第一个前端网页</title>
+    <title>🎮 游戏推荐 · 表格提交</title>
+    <!-- 柔和风格 & 干净字体 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
+    <!-- Font Awesome 6 (免费图标) 用于游戏分类点缀 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* 全局样式重置 */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: "Microsoft YaHei", sans-serif;
         }
 
-        /* 页面主体样式 */
         body {
-            line-height: 1.6;
-            color: #333;
-            background-color: #f5f5f5;
-        }
-
-        /* 头部样式 */
-        header {
-            background-color: #2c3e50;
-            color: white;
-            padding: 1rem;
-            text-align: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        /* 导航栏样式 */
-        nav {
-            background-color: #34495e;
-            padding: 0.8rem;
-        }
-
-        nav ul {
-            list-style: none;
+            background: linear-gradient(145deg, #f0f4fa 0%, #e9eef5 100%);
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
             display: flex;
+            align-items: center;
             justify-content: center;
-            flex-wrap: wrap;
+            padding: 1.5rem;
+            color: #1e293b;
         }
 
-        nav li {
-            margin: 0 1rem;
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 2.5rem;
+            box-shadow: 0 25px 45px -12px rgba(0, 20, 40, 0.25), inset 0 1px 2px rgba(255,255,255,0.6);
+            border: 1px solid rgba(255,255,255,0.5);
+            width: 100%;
+            max-width: 1300px;
+            padding: 2rem 2.2rem;
         }
 
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        nav a:hover {
-            color: #3498db;
-        }
-
-        /* 主要内容容器 */
-        .container {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 1rem;
+        h1 {
             display: flex;
-            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.7rem;
+            font-weight: 600;
+            font-size: 2.2rem;
+            letter-spacing: -0.02em;
+            color: #0f1825;
+            margin-bottom: 0.25rem;
+        }
+
+        h1 i {
+            background: #1e2c3a;
+            color: white;
+            padding: 0.5rem;
+            border-radius: 1.5rem;
+            font-size: 1.5rem;
+            box-shadow: 0 8px 18px -6px #1e2c3a70;
+        }
+
+        .subhead {
+            font-size: 1rem;
+            font-weight: 400;
+            color: #475569;
+            margin-bottom: 2rem;
+            border-left: 4px solid #8b5cf6;
+            padding-left: 1rem;
+            background: rgba(139, 92, 246, 0.05);
+            border-radius: 0 1rem 1rem 0;
+            width: fit-content;
+            padding: 0.6rem 1.5rem 0.6rem 1rem;
+        }
+
+        /* 双列布局：左表格 + 右推荐列表 */
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
             gap: 2rem;
+            align-items: start;
         }
 
-        /* 主体内容区 */
-        main {
-            flex: 3;
-            background: white;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        /* ----- 左侧：提交表格 (干净且现代) ----- */
+        .form-container {
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 2rem;
+            padding: 1.8rem 1.8rem 2rem;
+            border: 1px solid rgba(255,255,255,0.8);
+            box-shadow: 0 12px 24px -16px rgba(0,0,0,0.2);
         }
 
-        /* 侧边栏 */
-        aside {
-            flex: 1;
-            background: white;
-            padding: 1.5rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-
-        /* 卡片样式 */
-        .card {
+        .form-title {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 1.4rem;
+            font-weight: 600;
             margin-bottom: 1.5rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 1px solid #eee;
+        }
+        .form-title i {
+            color: #8b5cf6;
+            background: #ffffffd0;
+            padding: 0.4rem;
+            border-radius: 12px;
         }
 
-        .card h3 {
-            color: #2c3e50;
-            margin-bottom: 0.8rem;
+        .game-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.3rem;
         }
 
-        .card p {
-            color: #666;
+        .input-field {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .input-field label {
+            font-weight: 500;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            color: #334155;
+            margin-left: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .input-field label i {
+            font-size: 0.9rem;
+            color: #8b5cf6;
+            width: 1.2rem;
+        }
+
+        .input-field input, .input-field select, .input-field textarea {
+            background: rgba(255,255,255,0.7);
+            border: 1.5px solid rgba(203, 213, 225, 0.6);
+            border-radius: 1.2rem;
+            padding: 0.8rem 1.2rem;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.2s;
+            outline: none;
+            color: #0f172a;
+            font-weight: 500;
+            backdrop-filter: blur(4px);
+        }
+
+        .input-field input:focus, .input-field select:focus, .input-field textarea:focus {
+            border-color: #8b5cf6;
+            box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.15);
+            background: white;
+        }
+
+        .input-field textarea {
+            min-height: 85px;
+            resize: vertical;
+        }
+
+        /* 双列 inline 小区域 (评分+平台) */
+        .row-duo {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .submit-btn {
+            background: #1e2c3a;
+            color: white;
+            border: none;
+            border-radius: 2rem;
+            padding: 1rem 1.8rem;
+            font-weight: 600;
+            font-size: 1.2rem;
+            letter-spacing: 0.3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            margin-top: 1rem;
+            cursor: pointer;
+            transition: 0.15s;
+            border: 1px solid #33485d;
+            box-shadow: 0 10px 20px -10px #0b1a2a;
+        }
+
+        .submit-btn:hover {
+            background: #2d4055;
+            transform: scale(1.01);
+            box-shadow: 0 16px 24px -10px #0f2b3f;
+        }
+
+        .submit-btn i {
+            font-size: 1.1rem;
+        }
+
+        /* ----- 右侧：推荐列表（卡片表格样式）----- */
+        .rec-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
             margin-bottom: 1rem;
+            padding: 0 0.2rem;
+        }
+        .rec-header h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .badge-count {
+            background: #8b5cf6;
+            color: white;
+            border-radius: 40px;
+            padding: 0.2rem 0.9rem;
+            font-size: 0.9rem;
+            font-weight: 500;
         }
 
-        .btn {
+        .game-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255,255,255,0.5);
+            backdrop-filter: blur(4px);
+            border-radius: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 10px 20px -12px rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.7);
+        }
+
+        .game-table thead tr {
+            background: rgba(30, 44, 58, 0.8);
+            backdrop-filter: blur(4px);
+            color: white;
+            text-align: left;
+            font-weight: 500;
+            font-size: 0.9rem;
+            letter-spacing: 0.3px;
+        }
+
+        .game-table th {
+            padding: 1rem 1rem;
+            font-weight: 500;
+        }
+        .game-table th i {
+            margin-right: 0.5rem;
+            opacity: 0.8;
+            font-size: 0.8rem;
+        }
+
+        .game-table td {
+            padding: 1rem 1rem;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+            color: #1e293b;
+            font-weight: 500;
+        }
+
+        .game-table tbody tr {
+            transition: 0.1s;
+            background: rgba(255,255,255,0.2);
+        }
+
+        .game-table tbody tr:hover {
+            background: rgba(255,255,255,0.7);
+        }
+
+        .platform-tag {
+            background: #e6edf5;
+            padding: 0.3rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #1f3a5f;
             display: inline-block;
-            padding: 0.5rem 1rem;
-            background-color: #3498db;
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
-            transition: background-color 0.3s;
+            white-space: nowrap;
         }
 
-        .btn:hover {
-            background-color: #2980b9;
+        .rating-stars {
+            color: #f59e0b;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
         }
 
-        /* 侧边栏列表 */
-        .sidebar-list {
-            list-style: none;
+        .action-remove {
+            color: #b91c1c;
+            background: none;
+            border: none;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: 0.1s;
+            padding: 0.2rem 0.4rem;
+            border-radius: 30px;
+        }
+        .action-remove:hover {
+            color: #dc2626;
+            background: rgba(220, 38, 38, 0.1);
         }
 
-        .sidebar-list li {
-            margin-bottom: 0.8rem;
-            padding-bottom: 0.8rem;
-            border-bottom: 1px solid #eee;
-        }
-
-        .sidebar-list a {
-            color: #3498db;
-            text-decoration: none;
-        }
-
-        .sidebar-list a:hover {
-            text-decoration: underline;
-        }
-
-        /* 页脚样式 */
-        footer {
-            background-color: #2c3e50;
-            color: white;
+        /* 空状态 */
+        .empty-row td {
+            padding: 2rem;
             text-align: center;
-            padding: 1.5rem;
-            margin-top: 2rem;
+            color: #64748b;
+            font-style: italic;
         }
 
-        /* 响应式适配 */
-        @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
-            }
+        /* 辅助 */
+        .footnote {
+            margin-top: 1.2rem;
+            font-size: 0.85rem;
+            color: #4b5a6e;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(139, 92, 246, 0.1);
+            padding: 0.6rem 1rem;
+            border-radius: 2rem;
+            width: fit-content;
+        }
 
-            nav ul {
-                flex-direction: column;
-                text-align: center;
+        /* 响应式 */
+        @media (max-width: 850px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+                gap: 2rem;
             }
-
-            nav li {
-                margin: 0.5rem 0;
+            .glass-card {
+                padding: 1.5rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- 页面头部 -->
-    <header>
-        <h1>我的个人网页</h1>
-        <p>一个简单的HTML前端网页示例</p>
-    </header>
+    <div class="glass-card">
+        <h1>
+            <i class="fas fa-gamepad"></i> 
+            ️游戏档案馆 · 推荐提交
+        </h1>
+        <div class="subhead">
+            <i class="fas fa-mouse-pointer" style="margin-right: 8px;"></i> 用表格推荐你喜爱的游戏，它会立刻出现在右侧列表
+        </div>
 
-    <!-- 导航栏 -->
-    <nav>
-        <ul>
-            <li><a href="#home">首页</a></li>
-            <li><a href="#about">关于我们</a></li>
-            <li><a href="#services">服务</a></li>
-            <li><a href="#contact">联系我们</a></li>
-        </ul>
-    </nav>
+        <!-- 主区域: 左表格 + 右卡片表格 -->
+        <div class="dashboard">
+            <!-- 左侧表格 (提交) -->
+            <div class="form-container">
+                <div class="form-title">
+                    <i class="fas fa-pen-fancy"></i> 
+                    <span>➕ 添加你的推荐</span>
+                </div>
 
-    <!-- 主要内容容器 -->
-    <div class="container">
-        <!-- 主体内容 -->
-        <main>
-            <section class="card">
-                <h3>欢迎来到我的网页</h3>
-                <p>这是一个使用纯HTML和CSS构建的前端网页示例，包含了完整的网页结构和基础的响应式设计，适配电脑、平板和手机等不同设备。</p>
-                <a href="#" class="btn">了解更多</a>
-            </section>
+                <div class="game-form">
+                    <div class="input-field">
+                        <label for="title"><i class="fas fa-heading"></i>游戏名称 *</label>
+                        <input type="text" id="title" placeholder="例如： 塞尔达传说 旷野之息" autocomplete="off">
+                    </div>
 
-            <section class="card">
-                <h3>核心功能</h3>
-                <p>这个网页模板包含了以下核心特性：</p>
-                <ul>
-                    <li>清晰的网页结构（头部、导航、主体、侧边栏、页脚）</li>
-                    <li>响应式设计，适配移动端和桌面端</li>
-                    <li>基础的交互效果（悬停样式、按钮动画）</li>
-                    <li>美观的卡片式布局</li>
-                </ul>
-            </section>
-        </main>
+                    <div class="input-field">
+                        <label for="genre"><i class="fas fa-tag"></i>类型 / 标签</label>
+                        <select id="genre">
+                            <option value="动作冒险">🎮 动作冒险</option>
+                            <option value="角色扮演" selected>⚔️ 角色扮演 (RPG)</option>
+                            <option value="射击">🔫 射击 / FPS</option>
+                            <option value="策略">🧠 策略 / 战棋</option>
+                            <option value="竞速">🏎️ 竞速 / 赛车</option>
+                            <option value="模拟经营">🏗️ 模拟经营</option>
+                            <option value="独立游戏">✨ 独立游戏</option>
+                            <option value="多人合作">🤝 多人合作</option>
+                        </select>
+                    </div>
 
-        <!-- 侧边栏 -->
-        <aside>
-            <h3>热门链接</h3>
-            <ul class="sidebar-list">
-                <li><a href="#">HTML教程</a></li>
-                <li><a href="#">CSS教程</a></li>
-                <li><a href="#">JavaScript教程</a></li>
-                <li><a href="#">前端开发指南</a></li>
-            </ul>
+                    <div class="row-duo">
+                        <div class="input-field">
+                            <label for="platform"><i class="fas fa-desktop"></i>平台</label>
+                            <input type="text" id="platform" placeholder="PC / Switch / PS5" value="PC">
+                        </div>
+                        <div class="input-field">
+                            <label for="rating"><i class="fas fa-star"></i>评分 (1-5)</label>
+                            <select id="rating">
+                                <option value="5">⭐⭐⭐⭐⭐ 5</option>
+                                <option value="4" selected>⭐⭐⭐⭐ 4</option>
+                                <option value="3">⭐⭐⭐ 3</option>
+                                <option value="2">⭐⭐ 2</option>
+                                <option value="1">⭐ 1</option>
+                            </select>
+                        </div>
+                    </div>
 
-            <h3 style="margin-top: 1.5rem;">联系我们</h3>
-            <p>邮箱：example@demo.com</p>
-            <p>电话：123-4567-8910</p>
-        </aside>
+                    <div class="input-field">
+                        <label for="comments"><i class="fas fa-comment"></i>短评 / 推荐理由</label>
+                        <textarea id="comments" placeholder="为什么值得玩？... (可选)"></textarea>
+                    </div>
+
+                    <button class="submit-btn" id="addGameBtn">
+                        <i class="fas fa-plus-circle"></i> 立即推荐
+                    </button>
+                </div>
+
+                <div class="footnote">
+                    <i class="fas fa-info-circle"></i> 点击推荐后下方表格实时更新 · 可删除任意条目
+                </div>
+            </div>
+
+            <!-- 右侧推荐列表 (以表格形式展现) -->
+            <div>
+                <div class="rec-header">
+                    <h2>
+                        <i class="fas fa-list-ul" style="color: #8b5cf6;"></i> 
+                        热门推荐 · 实时
+                    </h2>
+                    <span class="badge-count" id="gameCount">6 款</span>
+                </div>
+
+                <!-- 游戏表格: 干净且直观 -->
+                <table class="game-table" id="gameTable">
+                    <thead>
+                        <tr>
+                            <th><i class="fas fa-dice-d6"></i> 游戏</th>
+                            <th><i class="fas fa-folder"></i> 类型</th>
+                            <th><i class="fas fa-laptop"></i> 平台</th>
+                            <th><i class="fas fa-star"></i> 评分</th>
+                            <th><i class="fas fa-eraser"></i></th> <!-- 操作列 -->
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <!-- 动态由 JavaScript 填充 / 静态备用行 (但会被js替换) -->
+                        <tr class="empty-row">
+                            <td colspan="5">✨ 加载推荐游戏中……</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- 附加推荐信息占位 (可见短评悬浮? 用简短说明) -->
+                <div style="margin-top: 0.8rem; font-size: 0.8rem; color: #4a5e75; text-align: right;">
+                    <i class="far fa-comment-dots"></i> 将鼠标悬停在游戏名可看短评（如果有）
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!-- 页脚 -->
-    <footer>
+    <script>
+        (function() {
+            // ---------- 初始模拟数据 ----------
+            let games = [
+                { id: 'g1', title: '塞尔达传说 旷野之息', genre: '动作冒险', platform: 'Switch', rating: 5, comment: '开放世界标杆，化学引擎无敌' },
+                { id: 'g2', title: '巫师3 狂猎', genre: '角色扮演', platform: 'PC / PS4', rating: 5, comment: '剧情天花板，血与酒yyds' },
+                { id: 'g3', title: '艾尔登法环', genre: '动作冒险', platform: 'PS5 / PC', rating: 5, comment: '宫崎英高的艺术品' },
+                { id: 'g4', title: '星露谷物语', genre: '模拟经营', platform: 'PC / Switch', rating: 4, comment: '种田停不下来，像素暖心' },
+                { id: 'g5', title: '双人成行', genre: '多人合作', platform: 'PC / 全平台', rating: 5, comment: '双打神作，友谊考验器' },
+                { id: 'g6', title: '文明VI', genre: '策略', platform: 'PC', rating: 4, comment: '再来一回合就天亮' }
+            ];
+
+            // 工具函数：生成简短id
+            function generateId() {
+                return Date.now() + '-' + Math.random().toString(36).substring(2, 8);
+            }
+
+            // 渲染表格
+            const tbody = document.getElementById('tableBody');
+            const gameCountSpan = document.getElementById('gameCount');
+
+            function renderTable() {
+                if (!tbody) return;
+
+                if (games.length === 0) {
+                    tbody.innerHTML = `<tr class="empty-row"><td colspan="5">📭 暂无推荐，快用左边表格提交第一款！</td></tr>`;
+                    gameCountSpan.innerText = '0 款';
+                    return;
+                }
+
+                let html = '';
+                games.forEach(game => {
+                    // 将评分转成星星显示
+                    const starFull = '★'.repeat(game.rating);
+                    const starEmpty = '☆'.repeat(5 - game.rating);
+                    const stars = `<span class="rating-stars" title="${game.rating}星">${starFull}${starEmpty}</span>`;
+
+                    // 转义 游戏名title 显示短评（如果有）
+                    const titleDisplay = game.comment 
+                        ? `<span title="💬 ${game.comment.replace(/"/g, '&quot;')}">${game.title}</span>` 
+                        : game.title;
+
+                    html += `<tr data-id="${game.id}">
+                        <td style="font-weight: 600;">${titleDisplay}</td>
+                        <td><span style="background: #e5deff; padding:0.2rem 0.9rem; border-radius:30px; font-size:0.8rem;">${game.genre}</span></td>
+                        <td><span class="platform-tag"><i class="fas fa-play" style="font-size: 0.7rem; margin-right: 4px;"></i>${game.platform}</span></td>
+                        <td>${stars}</td>
+                        <td><button class="action-remove" data-id="${game.id}" title="移除推荐"><i class="fas fa-trash-alt"></i></button></td>
+                    </tr>`;
+                });
+
+                tbody.innerHTML = html;
+                gameCountSpan.innerText = `${games.length} 款`;
+
+                // 给所有删除按钮绑定事件
+                document.querySelectorAll('.action-remove').forEach(btn => {
+                    btn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        const id = this.getAttribute('data-id');
+                        removeGameById(id);
+                    });
+                });
+            }
+
+            // 删除游戏
+            function removeGameById(id) {
+                games = games.filter(g => g.id !== id);
+                renderTable();
+            }
+
+            // 添加新游戏 (从表单收集)
+            function addGameFromForm() {
+                const titleInput = document.getElementById('title');
+                const genreSelect = document.getElementById('genre');
+                const platformInput = document.getElementById('platform');
+                const ratingSelect = document.getElementById('rating');
+                const commentText = document.getElementById('comments');
+
+                // 简单的校验
+                const title = titleInput.value.trim();
+                if (!title) {
+                    alert('请填写游戏名称 🎮');
+                    titleInput.focus();
+                    return;
+                }
+
+                const genre = genreSelect.value;
+                const platform = platformInput.value.trim() || '未知平台';
+                const rating = parseInt(ratingSelect.value, 10);  // 1-5
+                const comment = commentText.value.trim() || '';   // 可选
+
+                // 创建新游戏对象
+                const newGame = {
+                    id: generateId(),
+                    title: title,
+                    genre: genre,
+                    platform: platform,
+                    rating: rating,
+                    comment: comment
+                };
+
+                games.unshift(newGame);  // 最新推荐显示在最上面
+
+                // 清空表单 (保留类型默认, 平台默认PC, 评分默认4)
+                titleInput.value = '';
+                // genre 我们保留原来选择不重置，但可以设置默认也可以，这里为了顺手不清零，但把平台重置为占位？不重置也行；为了UX重置部分
+                platformInput.value = 'PC';       // 重置为常见平台
+                ratingSelect.value = '4';          // 重置4星
+                commentText.value = '';
+
+                // 重新渲染表格
+                renderTable();
+
+                // 可选项：给个小提示
+                // alert('✅ 游戏已加入推荐列表！');
+            }
+
+            // 绑定提交按钮
+            const addBtn = document.getElementById('addGameBtn');
+            if (addBtn) {
+                addBtn.addEventListener('click', addGameFromForm);
+            }
+
+            // 允许在textarea按Ctrl+Enter提交（小彩蛋）
+            const commentArea = document.getElementById('comments');
+            if (commentArea) {
+                commentArea.addEventListener('keydown', (e) => {
+                    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                        e.preventDefault();
+                        addGameFromForm();
+                    }
+                });
+            }
+
+            // 初始化渲染
+            renderTable();
+
+            // 额外：聚焦第一个输入框（可选）
+            document.getElementById('title')?.focus();
+        })();
+    </script>
+
+    <!-- 一个小装饰：点击tr删除确认之类由渲染决定，优雅 -->
+</body>
+</html>
         <p>&copy; 2026 我的个人网页 - 保留所有权利</p>
     </footer>
 </body>
