@@ -1,592 +1,834 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎮 游戏推荐 · 表格提交</title>
-    <!-- 柔和风格 & 干净字体 -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
-    <!-- Font Awesome 6 (免费图标) 用于游戏分类点缀 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>中国古代建筑博览园 - 数字文化遗产探索之旅</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --primary-red: #8B1E1E;
+            --imperial-gold: #D4AF37;
+            --ink-black: #1a1a1a;
+            --paper-white: #F5F5DC;
+            --jade-green: #2F5D3D;
         }
-
+        
         body {
-            background: linear-gradient(145deg, #f0f4fa 0%, #e9eef5 100%);
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1.5rem;
-            color: #1e293b;
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #0a0a0a;
+            color: #F5F5DC;
+            overflow-x: hidden;
         }
-
-        .glass-card {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-radius: 2.5rem;
-            box-shadow: 0 25px 45px -12px rgba(0, 20, 40, 0.25), inset 0 1px 2px rgba(255,255,255,0.6);
-            border: 1px solid rgba(255,255,255,0.5);
-            width: 100%;
-            max-width: 1300px;
-            padding: 2rem 2.2rem;
+        
+        .serif-font {
+            font-family: 'Noto Serif SC', serif;
         }
-
-        h1 {
-            display: flex;
-            align-items: center;
-            gap: 0.7rem;
-            font-weight: 600;
-            font-size: 2.2rem;
-            letter-spacing: -0.02em;
-            color: #0f1825;
-            margin-bottom: 0.25rem;
+        
+        /* 中式纹理背景 */
+        .texture-bg {
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(139, 30, 30, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
+                linear-gradient(to bottom, rgba(10,10,10,0.9), rgba(10,10,10,0.95)),
+                url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4af37' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
         }
-
-        h1 i {
-            background: #1e2c3a;
-            color: white;
-            padding: 0.5rem;
-            border-radius: 1.5rem;
-            font-size: 1.5rem;
-            box-shadow: 0 8px 18px -6px #1e2c3a70;
-        }
-
-        .subhead {
-            font-size: 1rem;
-            font-weight: 400;
-            color: #475569;
-            margin-bottom: 2rem;
-            border-left: 4px solid #8b5cf6;
-            padding-left: 1rem;
-            background: rgba(139, 92, 246, 0.05);
-            border-radius: 0 1rem 1rem 0;
-            width: fit-content;
-            padding: 0.6rem 1.5rem 0.6rem 1rem;
-        }
-
-        /* 双列布局：左表格 + 右推荐列表 */
-        .dashboard {
-            display: grid;
-            grid-template-columns: 1fr 1.2fr;
-            gap: 2rem;
-            align-items: start;
-        }
-
-        /* ----- 左侧：提交表格 (干净且现代) ----- */
-        .form-container {
-            background: rgba(255, 255, 255, 0.5);
-            border-radius: 2rem;
-            padding: 1.8rem 1.8rem 2rem;
-            border: 1px solid rgba(255,255,255,0.8);
-            box-shadow: 0 12px 24px -16px rgba(0,0,0,0.2);
-        }
-
-        .form-title {
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            font-size: 1.4rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-        }
-        .form-title i {
-            color: #8b5cf6;
-            background: #ffffffd0;
-            padding: 0.4rem;
-            border-radius: 12px;
-        }
-
-        .game-form {
-            display: flex;
-            flex-direction: column;
-            gap: 1.3rem;
-        }
-
-        .input-field {
-            display: flex;
-            flex-direction: column;
-            gap: 0.4rem;
-        }
-
-        .input-field label {
-            font-weight: 500;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
-            color: #334155;
-            margin-left: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-        }
-
-        .input-field label i {
-            font-size: 0.9rem;
-            color: #8b5cf6;
-            width: 1.2rem;
-        }
-
-        .input-field input, .input-field select, .input-field textarea {
-            background: rgba(255,255,255,0.7);
-            border: 1.5px solid rgba(203, 213, 225, 0.6);
-            border-radius: 1.2rem;
-            padding: 0.8rem 1.2rem;
-            font-size: 1rem;
-            font-family: 'Inter', sans-serif;
-            transition: all 0.2s;
-            outline: none;
-            color: #0f172a;
-            font-weight: 500;
-            backdrop-filter: blur(4px);
-        }
-
-        .input-field input:focus, .input-field select:focus, .input-field textarea:focus {
-            border-color: #8b5cf6;
-            box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.15);
-            background: white;
-        }
-
-        .input-field textarea {
-            min-height: 85px;
-            resize: vertical;
-        }
-
-        /* 双列 inline 小区域 (评分+平台) */
-        .row-duo {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-        }
-
-        .submit-btn {
-            background: #1e2c3a;
-            color: white;
-            border: none;
-            border-radius: 2rem;
-            padding: 1rem 1.8rem;
-            font-weight: 600;
-            font-size: 1.2rem;
-            letter-spacing: 0.3px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.8rem;
-            margin-top: 1rem;
-            cursor: pointer;
-            transition: 0.15s;
-            border: 1px solid #33485d;
-            box-shadow: 0 10px 20px -10px #0b1a2a;
-        }
-
-        .submit-btn:hover {
-            background: #2d4055;
-            transform: scale(1.01);
-            box-shadow: 0 16px 24px -10px #0f2b3f;
-        }
-
-        .submit-btn i {
-            font-size: 1.1rem;
-        }
-
-        /* ----- 右侧：推荐列表（卡片表格样式）----- */
-        .rec-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            margin-bottom: 1rem;
-            padding: 0 0.2rem;
-        }
-        .rec-header h2 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .badge-count {
-            background: #8b5cf6;
-            color: white;
-            border-radius: 40px;
-            padding: 0.2rem 0.9rem;
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-
-        .game-table {
-            width: 100%;
-            border-collapse: collapse;
-            background: rgba(255,255,255,0.5);
-            backdrop-filter: blur(4px);
-            border-radius: 1.5rem;
+        
+        /* 飞檐装饰 */
+        .eaves-decoration {
+            position: relative;
+            height: 60px;
+            background: linear-gradient(to bottom, transparent, rgba(139, 30, 30, 0.3));
             overflow: hidden;
-            box-shadow: 0 10px 20px -12px rgba(0,0,0,0.2);
-            border: 1px solid rgba(255,255,255,0.7);
         }
-
-        .game-table thead tr {
-            background: rgba(30, 44, 58, 0.8);
-            backdrop-filter: blur(4px);
-            color: white;
-            text-align: left;
-            font-weight: 500;
-            font-size: 0.9rem;
-            letter-spacing: 0.3px;
+        
+        .eaves-decoration::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 40px;
+            background: repeating-linear-gradient(
+                90deg,
+                transparent,
+                transparent 20px,
+                rgba(212, 175, 55, 0.3) 20px,
+                rgba(212, 175, 55, 0.3) 22px
+            );
+            clip-path: polygon(
+                0% 100%, 5% 60%, 10% 100%, 15% 60%, 20% 100%, 
+                25% 60%, 30% 100%, 35% 60%, 40% 100%, 45% 60%, 
+                50% 100%, 55% 60%, 60% 100%, 65% 60%, 70% 100%, 
+                75% 60%, 80% 100%, 85% 60%, 90% 100%, 95% 60%, 100% 100%
+            );
         }
-
-        .game-table th {
-            padding: 1rem 1rem;
-            font-weight: 500;
+        
+        /* 卷轴样式 */
+        .scroll-container {
+            background: linear-gradient(to right, #3e2723, #5d4037 10%, #d7ccc8 10%, #d7ccc8 90%, #5d4037 90%, #3e2723);
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            position: relative;
         }
-        .game-table th i {
-            margin-right: 0.5rem;
-            opacity: 0.8;
-            font-size: 0.8rem;
-        }
-
-        .game-table td {
-            padding: 1rem 1rem;
-            border-bottom: 1px solid rgba(148, 163, 184, 0.2);
-            color: #1e293b;
-            font-weight: 500;
-        }
-
-        .game-table tbody tr {
-            transition: 0.1s;
-            background: rgba(255,255,255,0.2);
-        }
-
-        .game-table tbody tr:hover {
-            background: rgba(255,255,255,0.7);
-        }
-
-        .platform-tag {
-            background: #e6edf5;
-            padding: 0.3rem 0.8rem;
-            border-radius: 30px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: #1f3a5f;
-            display: inline-block;
-            white-space: nowrap;
-        }
-
-        .rating-stars {
-            color: #f59e0b;
-            letter-spacing: 2px;
-            font-size: 0.9rem;
-        }
-
-        .action-remove {
-            color: #b91c1c;
-            background: none;
-            border: none;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: 0.1s;
-            padding: 0.2rem 0.4rem;
-            border-radius: 30px;
-        }
-        .action-remove:hover {
-            color: #dc2626;
-            background: rgba(220, 38, 38, 0.1);
-        }
-
-        /* 空状态 */
-        .empty-row td {
+        
+        .scroll-content {
+            background: #F5F5DC;
+            color: #1a1a1a;
+            margin: 0 10%;
             padding: 2rem;
-            text-align: center;
-            color: #64748b;
-            font-style: italic;
+            min-height: 300px;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%239C92AC' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
         }
-
-        /* 辅助 */
-        .footnote {
-            margin-top: 1.2rem;
-            font-size: 0.85rem;
-            color: #4b5a6e;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: rgba(139, 92, 246, 0.1);
-            padding: 0.6rem 1rem;
-            border-radius: 2rem;
-            width: fit-content;
+        
+        /* 建筑卡片悬停效果 */
+        .building-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(212, 175, 55, 0.2);
         }
-
-        /* 响应式 */
-        @media (max-width: 850px) {
-            .dashboard {
-                grid-template-columns: 1fr;
-                gap: 2rem;
+        
+        .building-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(212, 175, 55, 0.6);
+            box-shadow: 0 20px 40px rgba(139, 30, 30, 0.3);
+        }
+        
+        .building-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, transparent 0%, rgba(212, 175, 55, 0.1) 100%);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+        
+        .building-card:hover::before {
+            opacity: 1;
+        }
+        
+        /* 灯笼动画 */
+        @keyframes swing {
+            0%, 100% { transform: rotate(-3deg); }
+            50% { transform: rotate(3deg); }
+        }
+        
+        .lantern {
+            animation: swing 4s ease-in-out infinite;
+            transform-origin: top center;
+        }
+        
+        /* 淡入动画 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
             }
-            .glass-card {
-                padding: 1.5rem;
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
+        }
+        
+        .animate-fade-in {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        
+        /* 按钮样式 */
+        .btn-primary {
+            background: linear-gradient(135deg, #8B1E1E 0%, #6B1616 100%);
+            border: 2px solid #D4AF37;
+            color: #F5F5DC;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(139, 30, 30, 0.4);
+            border-color: #FFD700;
+        }
+        
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255,255,255,0) 0%,
+                rgba(255,255,255,0.1) 50%,
+                rgba(255,255,255,0) 100%
+            );
+            transform: rotate(45deg);
+            transition: all 0.5s;
+        }
+        
+        .btn-primary:hover::after {
+            left: 100%;
+        }
+        
+        /* 导航栏玻璃效果 */
+        .glass-nav {
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        
+        /* 区域标签 */
+        .zone-tag {
+            background: linear-gradient(135deg, rgba(139, 30, 30, 0.8), rgba(139, 30, 30, 0.4));
+            border-left: 3px solid #D4AF37;
+        }
+        
+        /* 卷轴收集品样式 */
+        .collectible-scroll {
+            background: linear-gradient(to bottom, #f4e4c1, #e8d5a3);
+            border: 2px solid #8B4513;
+            box-shadow: 
+                inset 0 0 20px rgba(139, 69, 19, 0.2),
+                0 4px 6px rgba(0,0,0,0.3);
+        }
+        
+        /* 网格背景 */
+        .grid-bg {
+            background-size: 40px 40px;
+            background-image:
+                linear-gradient(to right, rgba(212, 175, 55, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(212, 175, 55, 0.05) 1px, transparent 1px);
+        }
+        
+        /* 自定义滚动条 */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(to bottom, #8B1E1E, #D4AF37);
+            border-radius: 5px;
+        }
+        
+        /* 印章效果 */
+        .seal {
+            color: #8B1E1E;
+            border: 3px solid #8B1E1E;
+            border-radius: 4px;
+            padding: 4px 8px;
+            font-weight: bold;
+            display: inline-block;
+            transform: rotate(-5deg);
+            opacity: 0.8;
+        }
+        
+        /* 特性图标容器 */
+        .feature-icon {
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.2) 0%, transparent 70%);
+            border: 2px solid rgba(212, 175, 55, 0.3);
         }
     </style>
 </head>
-<body>
-    <div class="glass-card">
-        <h1>
-            <i class="fas fa-gamepad"></i> 
-            ️游戏档案馆 · 推荐提交
-        </h1>
-        <div class="subhead">
-            <i class="fas fa-mouse-pointer" style="margin-right: 8px;"></i> 用表格推荐你喜爱的游戏，它会立刻出现在右侧列表
+<body class="texture-bg">
+
+    <!-- 导航栏 -->
+    <nav class="glass-nav fixed w-full z-50 top-0">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-red-800 to-red-900 rounded-lg border-2 border-yellow-600 flex items-center justify-center">
+                        <span class="text-yellow-500 font-bold text-lg">建</span>
+                    </div>
+                    <span class="serif-font text-xl font-bold text-yellow-500 tracking-wider">古代建筑博览园</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#overview" class="text-gray-300 hover:text-yellow-500 transition-colors">概览</a>
+                    <a href="#zones" class="text-gray-300 hover:text-yellow-500 transition-colors">五大区域</a>
+                    <a href="#features" class="text-gray-300 hover:text-yellow-500 transition-colors">特色玩法</a>
+                    <a href="#tech" class="text-gray-300 hover:text-yellow-500 transition-colors">技术实现</a>
+                    <a href="#gallery" class="text-gray-300 hover:text-yellow-500 transition-colors">图鉴</a>
+                </div>
+                <button class="btn-primary px-6 py-2 rounded-full font-medium text-sm">
+                    开始探索
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center pt-16 overflow-hidden">
+        <!-- 背景装饰 -->
+        <div class="absolute inset-0 z-0">
+            <div class="absolute top-20 left-10 w-64 h-64 bg-red-900 rounded-full filter blur-3xl opacity-20"></div>
+            <div class="absolute bottom-20 right-10 w-96 h-96 bg-yellow-700 rounded-full filter blur-3xl opacity-10"></div>
+            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full grid-bg opacity-30"></div>
+        </div>
+        
+        <!-- 灯笼装饰 -->
+        <div class="absolute top-32 left-20 lantern hidden lg:block">
+            <div class="w-12 h-16 bg-gradient-to-b from-red-700 to-red-900 rounded-full border-2 border-yellow-600 shadow-lg shadow-red-900/50"></div>
+            <div class="w-1 h-8 bg-yellow-700 mx-auto"></div>
+        </div>
+        <div class="absolute top-40 right-32 lantern hidden lg:block" style="animation-delay: 1s;">
+            <div class="w-12 h-16 bg-gradient-to-b from-red-700 to-red-900 rounded-full border-2 border-yellow-600 shadow-lg shadow-red-900/50"></div>
+            <div class="w-1 h-8 bg-yellow-700 mx-auto"></div>
         </div>
 
-        <!-- 主区域: 左表格 + 右卡片表格 -->
-        <div class="dashboard">
-            <!-- 左侧表格 (提交) -->
-            <div class="form-container">
-                <div class="form-title">
-                    <i class="fas fa-pen-fancy"></i> 
-                    <span>➕ 添加你的推荐</span>
-                </div>
-
-                <div class="game-form">
-                    <div class="input-field">
-                        <label for="title"><i class="fas fa-heading"></i>游戏名称 *</label>
-                        <input type="text" id="title" placeholder="例如： 塞尔达传说 旷野之息" autocomplete="off">
-                    </div>
-
-                    <div class="input-field">
-                        <label for="genre"><i class="fas fa-tag"></i>类型 / 标签</label>
-                        <select id="genre">
-                            <option value="动作冒险">🎮 动作冒险</option>
-                            <option value="角色扮演" selected>⚔️ 角色扮演 (RPG)</option>
-                            <option value="射击">🔫 射击 / FPS</option>
-                            <option value="策略">🧠 策略 / 战棋</option>
-                            <option value="竞速">🏎️ 竞速 / 赛车</option>
-                            <option value="模拟经营">🏗️ 模拟经营</option>
-                            <option value="独立游戏">✨ 独立游戏</option>
-                            <option value="多人合作">🤝 多人合作</option>
-                        </select>
-                    </div>
-
-                    <div class="row-duo">
-                        <div class="input-field">
-                            <label for="platform"><i class="fas fa-desktop"></i>平台</label>
-                            <input type="text" id="platform" placeholder="PC / Switch / PS5" value="PC">
-                        </div>
-                        <div class="input-field">
-                            <label for="rating"><i class="fas fa-star"></i>评分 (1-5)</label>
-                            <select id="rating">
-                                <option value="5">⭐⭐⭐⭐⭐ 5</option>
-                                <option value="4" selected>⭐⭐⭐⭐ 4</option>
-                                <option value="3">⭐⭐⭐ 3</option>
-                                <option value="2">⭐⭐ 2</option>
-                                <option value="1">⭐ 1</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="input-field">
-                        <label for="comments"><i class="fas fa-comment"></i>短评 / 推荐理由</label>
-                        <textarea id="comments" placeholder="为什么值得玩？... (可选)"></textarea>
-                    </div>
-
-                    <button class="submit-btn" id="addGameBtn">
-                        <i class="fas fa-plus-circle"></i> 立即推荐
-                    </button>
-                </div>
-
-                <div class="footnote">
-                    <i class="fas fa-info-circle"></i> 点击推荐后下方表格实时更新 · 可删除任意条目
-                </div>
+        <div class="relative z-10 max-w-6xl mx-auto px-4 text-center">
+            <div class="mb-6 inline-block">
+                <span class="seal text-sm tracking-widest">数字文化遗产</span>
+            </div>
+            <h1 class="serif-font text-5xl md:text-7xl font-bold mb-6 leading-tight">
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-600">年中国古代建筑博览园</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-400 mb-4 serif-font">穿越千年时空，探索营造密码</p>
+            <p class="text-gray-500 max-w-2xl mx-auto mb-10 leading-relaxed">
+                基于 Electron 开发的沉浸式古建科普游戏，融合五大建筑区域、知识卷轴收集、NPC任务系统与考古挖掘玩法，
+                在数字世界中重现华夏营造智慧
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <button class="btn-primary px-8 py-4 rounded-full text-lg font-medium flex items-center gap-2 group">
+                    <span>进入博览园</span>
+                    <svg class="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                    </svg>
+                </button>
+                <button class="px-8 py-4 rounded-full border-2 border-yellow-600/50 text-yellow-500 hover:bg-yellow-600/10 transition-all">
+                    观看演示视频
+                </button>
             </div>
 
-            <!-- 右侧推荐列表 (以表格形式展现) -->
-            <div>
-                <div class="rec-header">
-                    <h2>
-                        <i class="fas fa-list-ul" style="color: #8b5cf6;"></i> 
-                        热门推荐 · 实时
-                    </h2>
-                    <span class="badge-count" id="gameCount">6 款</span>
+            <!-- 数据统计 -->
+            <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto">
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-yellow-500 serif-font">5</div>
+                    <div class="text-sm text-gray-500 mt-1">大建筑区域</div>
                 </div>
-
-                <!-- 游戏表格: 干净且直观 -->
-                <table class="game-table" id="gameTable">
-                    <thead>
-                        <tr>
-                            <th><i class="fas fa-dice-d6"></i> 游戏</th>
-                            <th><i class="fas fa-folder"></i> 类型</th>
-                            <th><i class="fas fa-laptop"></i> 平台</th>
-                            <th><i class="fas fa-star"></i> 评分</th>
-                            <th><i class="fas fa-eraser"></i></th> <!-- 操作列 -->
-                        </tr>
-                    </thead>
-                    <tbody id="tableBody">
-                        <!-- 动态由 JavaScript 填充 / 静态备用行 (但会被js替换) -->
-                        <tr class="empty-row">
-                            <td colspan="5">✨ 加载推荐游戏中……</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <!-- 附加推荐信息占位 (可见短评悬浮? 用简短说明) -->
-                <div style="margin-top: 0.8rem; font-size: 0.8rem; color: #4a5e75; text-align: right;">
-                    <i class="far fa-comment-dots"></i> 将鼠标悬停在游戏名可看短评（如果有）
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-yellow-500 serif-font">8+</div>
+                    <div class="text-sm text-gray-500 mt-1">特色建筑</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-yellow-500 serif-font">50+</div>
+                    <div class="text-sm text-gray-500 mt-1">知识卷轴</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-yellow-500 serif-font">100%</div>
+                    <div class="text-sm text-gray-500 mt-1">数字化还原</div>
                 </div>
             </div>
         </div>
-    </div>
+
+        <div class="absolute bottom-0 left-0 right-0 eaves-decoration"></div>
+    </section>
+
+    <!-- 作品概述 -->
+    <section id="overview" class="py-20 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="animate-fade-in">
+                    <h2 class="serif-font text-4xl font-bold mb-6 text-yellow-500">作品概述</h2>
+                    <div class="space-y-4 text-gray-300 leading-relaxed">
+                        <p>
+                            <span class="text-yellow-400 font-medium">选题背景：</span>
+                            中国古代建筑以其独特的木构架体系、深远的文化内涵和精湛的营造技艺，成为世界建筑史上独树一帜的篇章。
+                            从民居到皇宫，从园林到桥梁，每一处建筑都承载着"天人合一"的哲学思想。
+                        </p>
+                        <p>
+                            <span class="text-yellow-400 font-medium">创新价值：</span>
+                            本作品采用游戏化手段实现文化遗产数字化保护，通过Electron框架构建跨平台桌面应用，
+                            让玩家在探索中学习传统建筑的布局智慧、结构特点与文化背景。
+                        </p>
+                        <p>
+                            <span class="text-yellow-400 font-medium">适用范围：</span>
+                            适用于中小学传统文化教育、建筑专业启蒙学习、文化遗产科普推广及大众休闲娱乐。
+                        </p>
+                    </div>
+                    
+                    <div class="mt-8 flex gap-4">
+                        <div class="flex items-center gap-2 text-sm text-gray-400">
+                            <div class="w-2 h-2 bg-yellow-500 rounded-full"></div>
+                            <span>教育类游戏</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-gray-400">
+                            <div class="w-2 h-2 bg-red-500 rounded-full"></div>
+                            <span>数字文保</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-gray-400">
+                            <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                            <span>跨平台应用</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="relative">
+                    <div class="scroll-container p-4 transform rotate-1 hover:rotate-0 transition-transform duration-500">
+                        <div class="scroll-content rounded-lg">
+                            <h3 class="serif-font text-2xl font-bold text-red-900 mb-4 text-center border-b-2 border-red-900/20 pb-2">营造法式·序</h3>
+                            <div class="space-y-3 text-sm text-gray-800 leading-relaxed">
+                                <p class="first-letter:text-3xl first-letter:font-bold first-letter:text-red-900 first-letter:float-left first-letter:mr-2">
+                                    夫建筑者，凝固之音乐也。华夏营造，承数千年之智慧，融礼制于技艺，藏天工于人工。
+                                </p>
+                                <p>
+                                    民居之天井，藏风聚气；园林之借景，步移景异；皇宫之轴线，尊卑有序；
+                                    桥梁之飞虹，连接南北；官府之威严，镇守一方。
+                                </p>
+                                <p class="text-right mt-4 text-red-900 font-bold">—— 博览园记</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 装饰性卷轴轴头 -->
+                    <div class="absolute -left-4 top-1/2 transform -translate-y-1/2 w-8 h-24 bg-gradient-to-r from-yellow-700 to-yellow-600 rounded-full shadow-lg"></div>
+                    <div class="absolute -right-4 top-1/2 transform -translate-y-1/2 w-8 h-24 bg-gradient-to-l from-yellow-700 to-yellow-600 rounded-full shadow-lg"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 五大建筑区域 -->
+    <section id="zones" class="py-20 bg-black/30 relative">
+        <div class="absolute inset-0 grid-bg opacity-20"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16">
+                <h2 class="serif-font text-4xl font-bold text-yellow-500 mb-4">五大建筑区域</h2>
+                <p class="text-gray-400">探索各具特色的建筑聚落，体验不同功能的空间美学</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- 民居 -->
+                <div class="building-card bg-gradient-to-b from-gray-900 to-black p-6 rounded-xl relative group cursor-pointer overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-red-900/20 rounded-full filter blur-2xl group-hover:bg-red-900/30 transition-all"></div>
+                    <div class="zone-tag inline-block px-3 py-1 rounded text-xs font-medium text-yellow-200 mb-4">生活空间</div>
+                    <h3 class="serif-font text-2xl font-bold text-white mb-2">民居院落</h3>
+                    <p class="text-gray-400 text-sm mb-4">四水归堂的天井设计，马头墙耸立，展现徽派、晋派等地域特色</p>
+                    <div class="flex items-center justify-between text-xs text-yellow-600/80 border-t border-gray-800 pt-4">
+                        <span>代表：四合院、乔家大院</span>
+                        <span class="flex items-center gap-1">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/></svg>
+                            可探索
+                        </span>
+                    </div>
+                </div>
+
+                <!-- 桥梁 -->
+                <div class="building-card bg-gradient-to-b from-gray-900 to-black p-6 rounded-xl relative group cursor-pointer overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-blue-900/20 rounded-full filter blur-2xl group-hover:bg-blue-900/30 transition-all"></div>
+                    <div class="zone-tag inline-block px-3 py-1 rounded text-xs font-medium text-yellow-200 mb-4">交通枢纽</div>
+                    <h3 class="serif-font text-2xl font-bold text-white mb-2">古桥飞虹</h3>
+                    <p class="text-gray-400 text-sm mb-4">赵州桥的敞肩拱，卢沟桥的狮子阵列，体现"墙倒屋不塌"的结构智慧</p>
+                    <div class="flex items-center justify-between text-xs text-yellow-600/80 border-t border-gray-800 pt-4">
+                        <span>代表：石拱桥、廊桥</span>
+                        <span class="flex items-center gap-1">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/></svg>
+                            可交互
+                        </span>
+                    </div>
+                </div>
+
+                <!-- 官府 -->
+                <div class="building-card bg-gradient-to-b from-gray-900 to-black p-6 rounded-xl relative group cursor-pointer overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-purple-900/20 rounded-full filter blur-2xl group-hover:bg-purple-900/30 transition-all"></div>
+                    <div class="zone-tag inline-block px-3 py-1 rounded text-xs font-medium text-yellow-200 mb-4">权力象征</div>
+                    <h3 class="serif-font text-2xl font-bold text-white mb-2">府衙官署</h3>
+                    <p class="text-gray-400 text-sm mb-4">中轴对称的布局，高台基座的设计，展现古代行政建筑威严</p>
+                    <div class="flex items-center justify-between text-xs text-yellow-600/80 border-t border-gray-800 pt-4">
+                        <span>代表：县衙、府衙</span>
+                        <span class="flex items-center gap-1">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/></svg>
+                            有NPC
+                        </span>
+                    </div>
+                </div>
+
+                <!-- 园林 -->
+                <div class="building-card bg-gradient-to-b from-gray-900 to-black p-6 rounded-xl relative group cursor-pointer overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-green-900/20 rounded-full filter blur-2xl group-hover:bg-green-900/30 transition-all"></div>
+                    <div class="zone-tag inline-block px-3 py-1 rounded text-xs font-medium text-yellow-200 mb-4">文人意境</div>
+                    <h3 class="serif-font text-2xl font-bold text-white mb-2">江南园林</h3>
+                    <p class="text-gray-400 text-sm mb-4">虽由人作，宛自天开。借景、框景、对景，步移景异的诗画空间</p>
+                    <div class="flex items-center justify-between text-xs text-yellow-600/80 border-t border-gray-800 pt-4">
+                        <span>代表：苏州留园、拙政园</span>
+                        <span class="flex items-center gap-1">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/></svg>
+                            多隐藏点
+                        </span>
+                    </div>
+                </div>
+
+                <!-- 皇宫 -->
+                <div class="building-card bg-gradient-to-b from-gray-900 to-black p-6 rounded-xl relative group cursor-pointer overflow-hidden md:col-span-2 lg:col-span-2">
+                    <div class="absolute top-0 right-0 w-48 h-48 bg-yellow-900/10 rounded-full filter blur-3xl group-hover:bg-yellow-900/20 transition-all"></div>
+                    <div class="flex flex-col md:flex-row md:items-center gap-6">
+                        <div class="flex-1">
+                            <div class="zone-tag inline-block px-3 py-1 rounded text-xs font-medium text-yellow-200 mb-4">最高形制</div>
+                            <h3 class="serif-font text-3xl font-bold text-white mb-3">皇家宫殿</h3>
+                            <p class="text-gray-400 mb-4 max-w-lg">前朝后寝，左祖右社。九开间重檐庑殿顶，金龙和玺彩画，展现最高等级建筑规制</p>
+                            <div class="flex gap-4 text-xs text-yellow-600/80">
+                                <span class="flex items-center gap-1">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/></svg>
+                                    代表：紫禁城太和殿
+                                </span>
+                                <span>需完成前置任务解锁</span>
+                            </div>
+                        </div>
+                        <div class="w-full md:w-48 h-32 bg-gradient-to-br from-yellow-900/30 to-red-900/30 rounded-lg border border-yellow-600/30 flex items-center justify-center">
+                            <span class="text-6xl opacity-30">宮</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 特色玩法系统 -->
+    <section id="features" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="serif-font text-4xl font-bold text-yellow-500 mb-4">特色玩法系统</h2>
+                <p class="text-gray-400">多元化交互设计，让文化探索充满乐趣</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- 建筑详情 -->
+                <div class="bg-gray-900/50 border border-gray-800 rounded-xl p-6 hover:border-yellow-600/50 transition-all group">
+                    <div class="feature-icon w-14 h-14 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                        <svg class="w-7 h-7 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">建筑详情查看</h3>
+                    <p class="text-sm text-gray-400">靠近建筑按 <kbd class="px-2 py-1 bg-gray-800 rounded text-yellow-500 text-xs">E</kbd> 键，查看历史背景、文化意义与营造特点</p>
+                </div>
+
+                <!-- 知识卷轴 -->
+                <div class="bg-gray-900/50 border border-gray-800 rounded-xl p-6 hover:border-yellow-600/50 transition-all group">
+                    <div class="feature-icon w-14 h-14 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                        <svg class="w-7 h-7 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">知识卷轴收集</h3>
+                    <p class="text-sm text-gray-400">区域内拾取卷轴，学习"斗拱结构"、"榫卯工艺"等小知识，答题获得金币奖励</p>
+                </div>
+
+                <!-- NPC任务 -->
+                <div class="bg-gray-900/50 border border-gray-800 rounded-xl p-6 hover:border-yellow-600/50 transition-all group">
+                    <div class="feature-icon w-14 h-14 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                        <svg class="w-7 h-7 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">NPC任务系统</h3>
+                    <p class="text-sm text-gray-400">与工匠、学者、官员对话接取任务，完成可获得珍稀文物模型与历史图鉴</p>
+                </div>
+
+                <!-- 考古挖掘 -->
+                <div class="bg-gray-900/50 border border-gray-800 rounded-xl p-6 hover:border-yellow-600/50 transition-all group">
+                    <div class="feature-icon w-14 h-14 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                        <svg class="w-7 h-7 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">考古挖掘玩法</h3>
+                    <p class="text-sm text-gray-400">地图随机出现考古点，使用工具挖掘可获得稀有知识碎片与额外金币奖励</p>
+                </div>
+            </div>
+
+            <!-- 图鉴与成就 -->
+            <div class="mt-12 grid md:grid-cols-2 gap-8">
+                <div class="collectible-scroll p-6 rounded-lg text-gray-800">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 bg-red-800 rounded-full flex items-center justify-center text-yellow-100 font-bold">图</div>
+                        <h3 class="text-xl font-bold text-red-900">图鉴系统</h3>
+                    </div>
+                    <p class="text-sm leading-relaxed mb-4">记录已游历建筑的3D模型、历史照片与营造图纸，展示探索进度与收集完成度。每座建筑配有专属文化解说。</p>
+                    <div class="flex gap-2">
+                        <span class="px-3 py-1 bg-yellow-700/20 text-yellow-800 rounded-full text-xs">已收集: 0/8</span>
+                        <span class="px-3 py-1 bg-red-700/20 text-red-800 rounded-full text-xs">完成度: 0%</span>
+                    </div>
+                </div>
+
+                <div class="collectible-scroll p-6 rounded-lg text-gray-800">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 bg-yellow-700 rounded-full flex items-center justify-center text-yellow-100 font-bold">勋</div>
+                        <h3 class="text-xl font-bold text-red-900">成就系统</h3>
+                    </div>
+                    <p class="text-sm leading-relaxed mb-4">游历8个建筑并收集5个卷轴，解锁<span class="font-bold text-red-900">"中国古代建筑大师"</span>称号，获得专属徽章与隐藏区域进入权限。</p>
+                    <div class="w-full bg-gray-300 rounded-full h-2 mb-2">
+                        <div class="bg-red-800 h-2 rounded-full" style="width: 0%"></div>
+                    </div>
+                    <p class="text-xs text-gray-600">进度: 0/13 任务完成</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 技术实现 -->
+    <section id="tech" class="py-20 bg-black/50 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="serif-font text-4xl font-bold text-yellow-500 mb-4">技术实现架构</h2>
+                <p class="text-gray-400">现代Web技术栈构建跨平台文化遗产应用</p>
+            </div>
+
+            <div class="grid lg:grid-cols-3 gap-8">
+                <!-- 核心技术 -->
+                <div class="lg:col-span-2 space-y-6">
+                    <div class="bg-gray-900/80 border border-gray-800 rounded-xl p-6">
+                        <h3 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                            <span class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-sm">E</span>
+                            Electron 跨平台框架
+                        </h3>
+                        <p class="text-gray-400 text-sm mb-4">基于Chromium和Node.js，实现Windows/macOS/Linux三端统一体验，支持本地数据存储与离线访问。</p>
+                        <div class="flex gap-2 flex-wrap">
+                            <span class="px-3 py-1 bg-gray-800 rounded text-xs text-blue-400">主进程管理</span>
+                            <span class="px-3 py-1 bg-gray-800 rounded text-xs text-blue-400">渲染进程隔离</span>
+                            <span class="px-3 py-1 bg-gray-800 rounded text-xs text-blue-400">自动更新</span>
+                        </div>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="bg-gray-900/80 border border-gray-800 rounded-xl p-6">
+                            <h4 class="font-bold text-white mb-2">前端技术栈</h4>
+                            <ul class="space-y-2 text-sm text-gray-400">
+                                <li class="flex items-center gap-2">
+                                    <span class="w-2 h-2 bg-orange-500 rounded-full"></span>
+                                    HTML5 Canvas/WebGL 渲染
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <span class="w-2 h-2 bg-blue-500 rounded-full"></span>
+                                    CSS3 动画与响应式布局
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <span class="w-2 h-2 bg-yellow-500 rounded-full"></span>
+                                    JavaScript ES6+ 游戏逻辑
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="bg-gray-900/80 border border-gray-800 rounded-xl p-6">
+                            <h4 class="font-bold text-white mb-2">AI 辅助工具</h4>
+                            <ul class="space-y-2 text-sm text-gray-400">
+                                <li class="flex items-center gap-2">
+                                    <span class="w-2 h-2 bg-purple-500 rounded-full"></span>
+                                    豆包AI：文本内容生成
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <span class="w-2 h-2 bg-pink-500 rounded-full"></span>
+                                    海绵音乐：背景音乐创作
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+                                    DeepSeek：代码优化
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 架构图 -->
+                <div class="bg-gray-900/80 border border-gray-800 rounded-xl p-6">
+                    <h3 class="text-lg font-bold text-white mb-6">系统架构</h3>
+                    <div class="space-y-4">
+                        <div class="border-l-2 border-yellow-600 pl-4">
+                            <div class="text-yellow-500 text-sm font-medium mb-1">表现层</div>
+                            <div class="text-xs text-gray-500">UI界面 | 场景渲染 | 动画系统</div>
+                        </div>
+                        <div class="border-l-2 border-blue-600 pl-4 ml-2">
+                            <div class="text-blue-500 text-sm font-medium mb-1">逻辑层</div>
+                            <div class="text-xs text-gray-500">游戏状态 | 交互逻辑 | 任务系统</div>
+                        </div>
+                        <div class="border-l-2 border-green-600 pl-4 ml-2">
+                            <div class="text-green-500 text-sm font-medium mb-1">数据层</div>
+                            <div class="text-xs text-gray-500">建筑数据库 | 用户存档 | 成就记录</div>
+                        </div>
+                        <div class="border-l-2 border-purple-600 pl-4">
+                            <div class="text-purple-500 text-sm font-medium mb-1">Electron壳</div>
+                            <div class="text-xs text-gray-500">跨平台封装 | 本地存储 | 系统API</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 游戏截图画廊 -->
+    <section id="gallery" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="serif-font text-4xl font-bold text-yellow-500 mb-4">游戏实景预览</h2>
+                <p class="text-gray-400">精美的场景还原与UI设计</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-4">
+                <div class="group relative overflow-hidden rounded-xl aspect-video bg-gray-800 cursor-pointer">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                        <span class="text-white font-medium">主菜单界面</span>
+                    </div>
+                    <div class="w-full h-full flex items-center justify-center text-gray-600">
+                        <span class="text-4xl opacity-20">菜单</span>
+                    </div>
+                </div>
+                <div class="group relative overflow-hidden rounded-xl aspect-video bg-gray-800 cursor-pointer">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                        <span class="text-white font-medium">民居区域实景</span>
+                    </div>
+                    <div class="w-full h-full flex items-center justify-center text-gray-600">
+                        <span class="text-4xl opacity-20">民居</span>
+                    </div>
+                </div>
+                <div class="group relative overflow-hidden rounded-xl aspect-video bg-gray-800 cursor-pointer">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                        <span class="text-white font-medium">园林探索场景</span>
+                    </div>
+                    <div class="w-full h-full flex items-center justify-center text-gray-600">
+                        <span class="text-4xl opacity-20">园林</span>
+                    </div>
+                </div>
+                <div class="group relative overflow-hidden rounded-xl aspect-video bg-gray-800 cursor-pointer">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                        <span class="text-white font-medium">皇宫大殿内部</span>
+                    </div>
+                    <div class="w-full h-full flex items-center justify-center text-gray-600">
+                        <span class="text-4xl opacity-20">宫殿</span>
+                    </div>
+                </div>
+                <div class="group relative overflow-hidden rounded-xl aspect-video bg-gray-800 cursor-pointer">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                        <span class="text-white font-medium">图鉴收集界面</span>
+                    </div>
+                    <div class="w-full h-full flex items-center justify-center text-gray-600">
+                        <span class="text-4xl opacity-20">图鉴</span>
+                    </div>
+                </div>
+                <div class="group relative overflow-hidden rounded-xl aspect-video bg-gray-800 cursor-pointer">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                        <span class="text-white font-medium">知识卷轴答题</span>
+                    </div>
+                    <div class="w-full h-full flex items-center justify-center text-gray-600">
+                        <span class="text-4xl opacity-20">答题</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 团队与致谢 -->
+    <section class="py-20 bg-gradient-to-b from-black to-red-950/30">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <h2 class="serif-font text-3xl font-bold text-yellow-500 mb-8">项目团队</h2>
+            <div class="grid md:grid-cols-3 gap-8 mb-12">
+                <div class="p-6 border border-yellow-900/30 rounded-xl bg-black/20">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-red-800 to-red-900 rounded-full flex items-center justify-center text-2xl">👨‍💻</div>
+                    <h3 class="font-bold text-white mb-1">开发团队</h3>
+                    <p class="text-sm text-gray-400">程序设计与系统架构</p>
+                </div>
+                <div class="p-6 border border-yellow-900/30 rounded-xl bg-black/20">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-yellow-700 to-yellow-800 rounded-full flex items-center justify-center text-2xl">🎨</div>
+                    <h3 class="font-bold text-white mb-1">美术设计</h3>
+                    <p class="text-sm text-gray-400">场景建模与UI设计</p>
+                </div>
+                <div class="p-6 border border-yellow-900/30 rounded-xl bg-black/20">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-green-800 to-green-900 rounded-full flex items-center justify-center text-2xl">📚</div>
+                    <h3 class="font-bold text-white mb-1">内容策划</h3>
+                    <p class="text-sm text-gray-400">文化考据与文案撰写</p>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8">
+                <p class="text-gray-500 text-sm mb-2">指导教师：XXX 教授</p>
+                <p class="text-gray-600 text-xs">© 2026 中国古代建筑博览园项目组 | 数字文化遗产保护计划</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-black border-t border-gray-900 py-8">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-2">
+                <span class="text-yellow-600 font-bold text-lg">古代建筑博览园</span>
+                <span class="text-gray-600 text-sm">| 数字营造</span>
+            </div>
+            <div class="flex gap-6 text-sm text-gray-500">
+                <a href="#" class="hover:text-yellow-500 transition-colors">项目文档</a>
+                <a href="#" class="hover:text-yellow-500 transition-colors">GitHub</a>
+                <a href="#" class="hover:text-yellow-500 transition-colors">联系我们</a>
+            </div>
+        </div>
+    </footer>
 
     <script>
-        (function() {
-            // ---------- 初始模拟数据 ----------
-            let games = [
-                { id: 'g1', title: '塞尔达传说 旷野之息', genre: '动作冒险', platform: 'Switch', rating: 5, comment: '开放世界标杆，化学引擎无敌' },
-                { id: 'g2', title: '巫师3 狂猎', genre: '角色扮演', platform: 'PC / PS4', rating: 5, comment: '剧情天花板，血与酒yyds' },
-                { id: 'g3', title: '艾尔登法环', genre: '动作冒险', platform: 'PS5 / PC', rating: 5, comment: '宫崎英高的艺术品' },
-                { id: 'g4', title: '星露谷物语', genre: '模拟经营', platform: 'PC / Switch', rating: 4, comment: '种田停不下来，像素暖心' },
-                { id: 'g5', title: '双人成行', genre: '多人合作', platform: 'PC / 全平台', rating: 5, comment: '双打神作，友谊考验器' },
-                { id: 'g6', title: '文明VI', genre: '策略', platform: 'PC', rating: 4, comment: '再来一回合就天亮' }
-            ];
-
-            // 工具函数：生成简短id
-            function generateId() {
-                return Date.now() + '-' + Math.random().toString(36).substring(2, 8);
-            }
-
-            // 渲染表格
-            const tbody = document.getElementById('tableBody');
-            const gameCountSpan = document.getElementById('gameCount');
-
-            function renderTable() {
-                if (!tbody) return;
-
-                if (games.length === 0) {
-                    tbody.innerHTML = `<tr class="empty-row"><td colspan="5">📭 暂无推荐，快用左边表格提交第一款！</td></tr>`;
-                    gameCountSpan.innerText = '0 款';
-                    return;
-                }
-
-                let html = '';
-                games.forEach(game => {
-                    // 将评分转成星星显示
-                    const starFull = '★'.repeat(game.rating);
-                    const starEmpty = '☆'.repeat(5 - game.rating);
-                    const stars = `<span class="rating-stars" title="${game.rating}星">${starFull}${starEmpty}</span>`;
-
-                    // 转义 游戏名title 显示短评（如果有）
-                    const titleDisplay = game.comment 
-                        ? `<span title="💬 ${game.comment.replace(/"/g, '&quot;')}">${game.title}</span>` 
-                        : game.title;
-
-                    html += `<tr data-id="${game.id}">
-                        <td style="font-weight: 600;">${titleDisplay}</td>
-                        <td><span style="background: #e5deff; padding:0.2rem 0.9rem; border-radius:30px; font-size:0.8rem;">${game.genre}</span></td>
-                        <td><span class="platform-tag"><i class="fas fa-play" style="font-size: 0.7rem; margin-right: 4px;"></i>${game.platform}</span></td>
-                        <td>${stars}</td>
-                        <td><button class="action-remove" data-id="${game.id}" title="移除推荐"><i class="fas fa-trash-alt"></i></button></td>
-                    </tr>`;
-                });
-
-                tbody.innerHTML = html;
-                gameCountSpan.innerText = `${games.length} 款`;
-
-                // 给所有删除按钮绑定事件
-                document.querySelectorAll('.action-remove').forEach(btn => {
-                    btn.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        const id = this.getAttribute('data-id');
-                        removeGameById(id);
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
                     });
-                });
-            }
-
-            // 删除游戏
-            function removeGameById(id) {
-                games = games.filter(g => g.id !== id);
-                renderTable();
-            }
-
-            // 添加新游戏 (从表单收集)
-            function addGameFromForm() {
-                const titleInput = document.getElementById('title');
-                const genreSelect = document.getElementById('genre');
-                const platformInput = document.getElementById('platform');
-                const ratingSelect = document.getElementById('rating');
-                const commentText = document.getElementById('comments');
-
-                // 简单的校验
-                const title = titleInput.value.trim();
-                if (!title) {
-                    alert('请填写游戏名称 🎮');
-                    titleInput.focus();
-                    return;
                 }
+            });
+        });
 
-                const genre = genreSelect.value;
-                const platform = platformInput.value.trim() || '未知平台';
-                const rating = parseInt(ratingSelect.value, 10);  // 1-5
-                const comment = commentText.value.trim() || '';   // 可选
-
-                // 创建新游戏对象
-                const newGame = {
-                    id: generateId(),
-                    title: title,
-                    genre: genre,
-                    platform: platform,
-                    rating: rating,
-                    comment: comment
-                };
-
-                games.unshift(newGame);  // 最新推荐显示在最上面
-
-                // 清空表单 (保留类型默认, 平台默认PC, 评分默认4)
-                titleInput.value = '';
-                // genre 我们保留原来选择不重置，但可以设置默认也可以，这里为了顺手不清零，但把平台重置为占位？不重置也行；为了UX重置部分
-                platformInput.value = 'PC';       // 重置为常见平台
-                ratingSelect.value = '4';          // 重置4星
-                commentText.value = '';
-
-                // 重新渲染表格
-                renderTable();
-
-                // 可选项：给个小提示
-                // alert('✅ 游戏已加入推荐列表！');
+        // 导航栏滚动效果
+        let lastScroll = 0;
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 100) {
+                nav.classList.add('shadow-lg');
+                nav.classList.add('bg-black/95');
+            } else {
+                nav.classList.remove('shadow-lg');
+                nav.classList.remove('bg-black/95');
             }
+            
+            lastScroll = currentScroll;
+        });
 
-            // 绑定提交按钮
-            const addBtn = document.getElementById('addGameBtn');
-            if (addBtn) {
-                addBtn.addEventListener('click', addGameFromForm);
-            }
+        // 建筑卡片点击效果
+        document.querySelectorAll('.building-card').forEach(card => {
+            card.addEventListener('click', function() {
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 200);
+            });
+        });
 
-            // 允许在textarea按Ctrl+Enter提交（小彩蛋）
-            const commentArea = document.getElementById('comments');
-            if (commentArea) {
-                commentArea.addEventListener('keydown', (e) => {
-                    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
-                        e.preventDefault();
-                        addGameFromForm();
-                    }
-                });
-            }
+        // 简单的淡入动画触发
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
 
-            // 初始化渲染
-            renderTable();
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
 
-            // 额外：聚焦第一个输入框（可选）
-            document.getElementById('title')?.focus();
-        })();
+        document.querySelectorAll('.building-card, .feature-icon').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+            observer.observe(el);
+        });
     </script>
-
-    <!-- 一个小装饰：点击tr删除确认之类由渲染决定，优雅 -->
-</body>
-</html>
-        <p>&copy; 2026 我的个人网页 - 保留所有权利</p>
-    </footer>
 </body>
 </html>
